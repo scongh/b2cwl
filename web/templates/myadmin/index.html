@@ -209,8 +209,9 @@
                 <li class="sidebar-nav-link">
                     <a href="{% url 'index'%}" class="active">
                         <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
+                    </a>
+             
 
-                {% if request.user.is_superuser %}
                 <li class="sidebar-nav-link">
                     <a href="javascript:;" class="sidebar-nav-sub-title">
                         <i class="am-icon-user sidebar-nav-link-logo"></i> 
@@ -233,9 +234,7 @@
                         </li>
                     </ul>
                 </li>
-                {%endif%}
 
-                {% if request.user.is_superuser or 'myadmin.show_Users' in perms %}
                 <li class="sidebar-nav-link">
                     <a href="javascript:;" class="sidebar-nav-sub-title">
                         <i class="am-icon-users sidebar-nav-link-logo"></i> 
@@ -258,9 +257,7 @@
                         </li>
                     </ul>
                 </li>
-                {%endif%}
 
-                {% if request.user.is_superuser or 'myadmin.show_Cates' in perms %}
                 <li class="sidebar-nav-link">
                     <a href="javascript:;" class="sidebar-nav-sub-title">
                         <i class="am-icon-shopping-cart sidebar-nav-link-logo"></i>
@@ -283,9 +280,7 @@
                         </li>
                     </ul>
                 </li>
-                {%endif%}
 
-                {% if request.user.is_superuser or 'myadmin.show_Goods' in perms %}
                 <li class="sidebar-nav-link">
                     <a href="javascript:;" class="sidebar-nav-sub-title">
                         <i class="am-icon-shopping-bag sidebar-nav-link-logo"></i> 
@@ -308,9 +303,7 @@
                         </li>
                     </ul>
                 </li>
-                {%endif%}
 
-                {% if request.user.is_superuser or 'myadmin.show_Order' in perms %}
                 <li class="sidebar-nav-link">
                     <a href="javascript:;" class="sidebar-nav-sub-title">
                         <i class="am-icon-table sidebar-nav-link-logo"></i> 
@@ -326,7 +319,6 @@
                         </li>
                     </ul>
                 </li>
-                {% endif %}
                 
                
 

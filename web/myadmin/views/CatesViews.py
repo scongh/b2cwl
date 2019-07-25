@@ -6,10 +6,8 @@ from .. models import Cates
 
 from django.db.models import Q
 
-from django.contrib.auth.decorators import permission_required
 
 # 商品类别添加
-@permission_required('myadmin.create_Cates',raise_exception=True)
 def cate_add(request):
     if(request.method == 'POST'):
     	# 接收数据
@@ -40,8 +38,8 @@ def cate_add(request):
     	# 加载商品模板页面
     	return render(request,'myadmin/cates/add.html',context)
 
+
 # 商品类别列表
-@permission_required('myadmin.show_Cates',raise_exception=True)
 def cate_index(request):
 	data = Cates.objects.all() 
 
@@ -100,7 +98,6 @@ def get_cates_all(data):
 	return data
 
 # 商品分类删除
-@permission_required('myadmin.remove_Cates',raise_exception=True)
 def cate_del(request):
 
 	# this window--窗体对象 --> 文档对象(DOM), location(地址对象), history(历史对象)
@@ -122,7 +119,6 @@ def cate_del(request):
 	return JsonResponse({'msg':'删除成功','code':0})
 
 # ---name编辑
-@permission_required('myadmin.edit_Cates',raise_exception=True)
 def cate_edit(request):
 	try:
 		# 接收id

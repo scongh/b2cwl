@@ -82,9 +82,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'cong', # 库名
-        'USER': 'cong',
+        'USER': 'root',
         'PASSWORD': '123456',
-        'HOST': '192.168.9.37',
+        # 'HOST': '192.168.9.37', # cong 的IP
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
@@ -125,29 +126,3 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
-
-# 支付宝配置文件
-# APPID
-# 沙箱APPID，生产环境须更改为应用APPID。
-ALIPAY_APPID = "2016100900648245"
-
-# 网关
-# 沙箱网关，生产环境须更改为正式网关。
-ALIPAY_URL = "https://openapi.alipaydev.com/gateway.do"
-# 正式网关，开发环境勿使用。---真实环境
-# ALIPAY_URL = "https://openapi.alipay.com/gateway.do"
-
-# 回调通知地址
-# 如果只可以内网访问开发服务器
-ALIPAY_NOTIFY_URL = "http://192.168.9.37/order/pay_result/"
-# 如果生产环境或外网可以访问开发服务器
-# ALIPAY_NOTIFY_URL = "http://1.203.45.678:8000/order/pay_result/"
-
-# 支付后的跳转地址
-ALIPAY_RETURN_URL = 'http://192.168.9.37/order/pay_success/'
-
-# 应用私钥
-APP_PRIVATE_KEY_PATH = os.path.join(BASE_DIR, 'keys/app_private_key.txt')
-# 支付宝公钥
-ALIPAY_PUBLIC_KEY_PATH = os.path.join(BASE_DIR, 'keys/alipay_public_key.txt')

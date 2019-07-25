@@ -7,15 +7,9 @@ from .. models import Cates,Goods
 
 from django.db.models import Q
 
-from django.contrib.auth.decorators import permission_required
-
 # Create your views here.
-# show
-# create
-# edit
-# remove
+
 # 商品添加 -- 内容填写页面
-@permission_required('myadmin.create_Goods',raise_exception=True)
 def good_add(request):
     # 下拉框
     data = Cates.objects.all()
@@ -27,7 +21,6 @@ def good_add(request):
     return render(request,'myadmin/goods/add.html',context)
 
 # 商品添加-执行
-# @permission_required('myadmin.create_Goods',raise_exception=True)
 def good_insert(request):
 	# 接收表单数据
     data = request.POST.dict()
@@ -58,7 +51,6 @@ def good_insert(request):
     return HttpResponse('<script>alert("添加失败");history.back(-1);</script>')
 
 # 商品列表
-@permission_required('myadmin.show_Goods',raise_exception=True)
 def good_index(request):
     
     # data = Cates.objects.all()
@@ -105,7 +97,6 @@ def good_index(request):
 
     return render(request,'myadmin/goods/index.html',context)
 
-@permission_required('myadmin.remove_Goods',raise_exception=True)
 # 商品分类删除
 def good_del(request):
 
@@ -128,7 +119,6 @@ def good_del(request):
     return JsonResponse({'msg':'删除成功','code':0})
 
 # 商品状态修改
-@permission_required('myadmin.edit_Goods',raise_exception=True)
 def good_status(request):
     # 通过uid获取 会员对象
     ob = Goods.objects.get(id=request.GET.get('gid'))
@@ -139,7 +129,6 @@ def good_status(request):
     return JsonResponse({'msg':'状态更新成功','code':0})
 
 # 商品信息修改
-@permission_required('myadmin.edit_Goods',raise_exception=True)
 def good_edit(request):
     # 接受会员用户id
     gid = request.GET.get('gid')
@@ -179,3 +168,5 @@ def good_edit(request):
         # catelist 为里面的数据  
         context = {'ginfo': gob,'catelist': catelist}
         return render(request,'myadmin/goods/edit.html/',context)
+
+   
