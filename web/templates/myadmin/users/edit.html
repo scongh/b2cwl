@@ -1,0 +1,131 @@
+{% extends 'myadmin/index.html' %}
+
+{% block title %}
+<title>后台会员编辑</title>
+{% endblock %}
+
+
+{% block con %}
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title am-fl">
+                        会员编辑
+                    </div>
+                    <div class="widget-function am-fr">
+                        <a href="javascript:;" class="am-icon-cog">
+                        </a>
+                    </div>
+                </div>
+                <div class="widget-body am-fr">
+                    <form action="{% url 'myadmin_user_edit' %}?uid={{uinfo.id}}" method="POST" enctype="multipart/form-data" class="am-form tpl-form-line-form">
+                        {% csrf_token %}
+                        <div class="am-form-group">
+                            <label for="user-name" class="am-u-sm-3 am-form-label">
+                                昵称
+                            </label>
+                            <div class="am-u-sm-9">
+                                <input type="text" name="nikename" value={{uinfo.nikename}} class="tpl-form-input" placeholder="请输入昵称">
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <label for="user-name" class="am-u-sm-3 am-form-label">
+                                密码
+                            </label>
+                            <div class="am-u-sm-9">
+                                <input type="password" name="password" class="tpl-form-input" placeholder="无需操作">
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <label for="user-name" class="am-u-sm-3 am-form-label">
+                              手机号
+                            </label>
+                            <div class="am-u-sm-9">
+                                <input type="text" name="phone" value={{uinfo.phone}} class="tpl-form-input" placeholder="请输入手机号">
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <label for="user-name" class="am-u-sm-3 am-form-label">
+                              邮箱
+                            </label>
+                            <div class="am-u-sm-9">
+                                <input type="email" name="email" value="{{uinfo.email}}" class="tpl-form-input" placeholder="请输入email">
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="user-name" class="am-u-sm-3 am-form-label">
+                              年龄
+                            </label>
+                            <div class="am-u-sm-9">
+                                <input type="number" name="age" value={{uinfo.age}} class="tpl-form-input" 
+                                 placeholder="请输入年龄">
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="user-name" value={{uinfo.phone}} class="am-u-sm-3 am-form-label">
+                              性别
+                            </label>
+                            <div class="am-u-sm-9">
+                                <label class="am-radio-inline"><input type="radio" value="0" {% if uinfo.sex == '0'%} checked {% endif %} name="sex"> 女</label>
+                                <label class="am-radio-inline"><input type="radio" value="1" {% if uinfo.sex == '1'%} checked {% endif %} name="sex"> 男</label>
+                            </div>
+                        </div>
+                      
+                        <div class="am-form-group">
+                            <label for="user-weibo" class="am-u-sm-3 am-form-label">
+                                头像
+                                <span class="tpl-form-line-small-title"></span>
+                            </label>
+                            <div class="am-u-sm-9">
+                                <div class="am-form-group am-form-file">
+                                    <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                                        <i class="am-icon-cloud-upload">
+                                        </i>
+                                        添加封面图片
+                                    </button>
+                                    <!-- <input id="doc-form-file" name="pic" type="file" multiple=""> -->
+                                    <div class="tpl-form-file-img">
+                                        <img id="showImg" height=200 src="{{uinfo.pic_url}}" alt="">
+                                    </div>
+                                    <input id="ReadFile" name="pic" type="file" multiple="">
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                                $('#ReadFile').change(function(){
+                                    var file = this.files[0];
+
+                                    // 限定上传的图片类型
+                                    if(!/image\/\w+/.test(file.type)){
+                                        alert("请选择图片");
+                                        return false;
+                                    }
+
+                                    var reader = new FileReader();
+                                    reader.readAsDataURL(file);
+                                    reader.onload = function(e){
+                                        base64Code = this.result;
+                                        // 显示--base64的值 转为图片
+                                        $('#showImg').attr('src',base64Code);
+                                    }
+                                })
+                            </script>
+                        </div>
+                       
+                        <div class="am-form-group">
+                            <div class="am-u-sm-9 am-u-sm-push-3">
+                                <button class="am-btn am-btn-primary tpl-btn-bg-color-success ">
+                                    保存
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

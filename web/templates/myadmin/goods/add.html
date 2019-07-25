@@ -1,0 +1,165 @@
+{% extends 'myadmin/index.html' %}
+
+{% block title %}
+<title>后台商品添加</title>
+{% endblock %}
+
+
+{% block con %}
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title am-fl">
+                        商品添加
+                    </div>
+                    <div class="widget-function am-fr">
+                        <a href="javascript:;" class="am-icon-cog">
+                        </a>
+                    </div>
+                </div>
+                <div class="widget-body am-fr">
+                    
+                    <form action="{% url 'myadmin_good_insert' %}" method="POST" enctype="multipart/form-data" class="am-form tpl-form-line-form">
+                        {% csrf_token %}
+
+                        <div class="am-form-group">
+                            <label for="user-name" class="am-u-sm-3 am-form-label">
+                                商品名称
+                            </label>
+                            <div class="am-u-sm-9">
+                                <input type="text" name="goodsname" class="tpl-form-input" 
+                                 placeholder="请输入名称">
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="user-name" class="am-u-sm-3 am-form-label">
+                                所属分类
+                            </label>
+                            <select name="cateid" data-am-selected="{btnSize: 'sm'}" style="display: none;">
+                                <option>--类别--</option> 
+
+                                {% for i in catelist %}
+                                    <option value="{{i.id}}">{{i.tab}}{{i.name}}</option>
+                                {% endfor %}
+                            </select>  
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="user-name" class="am-u-sm-3 am-form-label">
+                                商品标题
+                            </label>
+                            <div class="am-u-sm-9">
+                                <input type="text" name="title" class="tpl-form-input" 
+                                 placeholder="请输入标题">
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="user-name" class="am-u-sm-3 am-form-label">
+                                价格
+                            </label>
+                            <div class="am-input-group">
+                                <input type="number" name="price" class="am-form-field"
+                                placeholder="请输入单价">
+                                <span class="am-input-group-label" style="color:#333; background: #ede;">￥</span>
+                            </div>
+                        </div>
+                        
+                        <div class="am-form-group">
+                            <label for="user-name" class="am-u-sm-3 am-form-label">
+                              库存
+                            </label>
+                            <div class="am-u-sm-9">
+                                <input type="number" name="goodsnum" class="tpl-form-input" 
+                                placeholder="请输入数量">
+                            </div>
+                        </div>
+
+                        <!-- <div class="am-form-group">
+                            <label for="user-name" class="am-u-sm-3 am-form-label">
+                                商品描述
+                            </label>
+                            <div class="am-u-sm-9">
+                                <textarea name="goodsinfo" class="tpl-form-input" 
+                                 placeholder="商品信息备注..."></textarea>
+                            </div>
+                        </div> -->
+
+                        <div class="am-form-group">
+                            <label for="user-weibo" class="am-u-sm-3 am-form-label">
+                                商品图片
+                                <span class="tpl-form-line-small-title"></span>
+                            </label>
+
+                            <div class="am-u-sm-9">
+                                <div class="am-form-group am-form-file">
+                                    <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                                        <i class="am-icon-cloud-upload"></i>
+                                        添加图片
+                                    </button>
+                                    <div class="tpl-form-file-img">
+                                        <img id="showImg" height=200 src="assets/img/a5.png" alt="">
+                                    </div>
+                                    <input id="ReadFile" name="pic" type="file" multiple="">
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                                $('#ReadFile').change(function(){
+                                    var file = this.files[0];
+
+                                    // 限定上传的图片类型
+                                    if(!/image\/\w+/.test(file.type)){
+                                        alert("请选择图片");
+                                        return false;
+                                    }
+
+                                    var reader = new FileReader();
+                                    reader.readAsDataURL(file);
+                                    reader.onload = function(e){
+                                        base64Code = this.result;
+                                        // 显示--base64的值 转为图片
+                                        $('#showImg').attr('src',base64Code);
+                                    }
+                                })
+                            </script>
+                        
+                        </div>
+
+                        <!-- 编译器 -->
+                        <link rel="stylesheet" type="text/css" href="/ueditor/UE/third-party/SyntaxHighlighter/shCoreDefault.css">
+                        <script type="text/javascript" src="/ueditor/UE/third-party/SyntaxHighlighter/shCore.js"></script>
+                        <script type="text/javascript" src="/ueditor/UE/ueditor.config.js"></script>
+                        <script type="text/javascript" src="/ueditor/UE/ueditor.all.min.js"></script>
+                        <script type="text/javascript" src="/ueditor/UE/lang/zh-cn/zh-cn.js"></script>
+
+                        <div class="am-form-group">
+                            <label for="user-intro" class="am-u-sm-3 am-form-label">商品简介</label>
+                            <div class="am-u-sm-9">
+                                <!-- <textarea name="descr" class="" rows="10" id="user-intro" placeholder="请输入商品简介"></textarea> -->
+                                <!-- <script id="editor" type="text/plain" style="width:100%;height:500px;"></script> -->
+                                <script id="editor" name="goodsinfo" type="text/plain" style="height:500px; color: #999"></script>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            var ue = UE.getEditor('editor');
+                            SyntaxHighlighter.all();
+                        </script>
+                        <!-- 编译器 -->
+                       
+                        <div class="am-form-group">
+                            <div class="am-u-sm-9 am-u-sm-push-3">
+                                <button class="am-btn am-btn-primary tpl-btn-bg-color-success ">
+                                    提交
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
