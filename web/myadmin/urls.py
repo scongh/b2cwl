@@ -1,11 +1,7 @@
 from django.conf.urls import url
-from . views import IndexViews,UsersViews,CatesViews,GoodsViews
-
-from .views import OrderViews
+from . views import IndexViews,UsersViews,CatesViews,GoodsViews,IndexViews
 
 urlpatterns = [
-    # 支付流程
-    # url(r'^auth/group/edit/$', OrderViews.myhome_pay_result, name="myhome_pay_result"),
 
 	# 登录
     url(r'^login/$',IndexViews.myadmin_login,name="myadmin_login"),
@@ -19,6 +15,7 @@ urlpatterns = [
 
     # 首页
     url(r'^index/$',IndexViews.index,name="index"),
+
 
 
     # 会员管理
@@ -58,19 +55,14 @@ urlpatterns = [
 
     # 权限管理
     # 管理员管理
-    url(r'^auth/user/idnex/$',IndexViews.myadmin_authuser_index,name="myadmin_authuser_index"), # 列表
-    url(r'^auth/user/add/$',IndexViews.myadmin_authuser_add,name="myadmin_authuser_add"), # 添加
-    url(r'^auth/user/insert/$',IndexViews.myadmin_authuser_insert,name="myadmin_authuser_insert"), # 执行添加
-    url(r'^auth/user/del/$', IndexViews.myadmin_authuser_del, name="myadmin_authuser_del"),  # 删除
-    url(r'^auth/user/edit/$', IndexViews.myadmin_authuser_edit, name="myadmin_authuser_edit"),  # 编辑
-
+    url(r'^auth/user/idnex/$',IndexViews.myadmin_authuser_index,name="myadmin_authuser_index"),
+    url(r'^auth/user/add/$',IndexViews.myadmin_authuser_add,name="myadmin_authuser_add"),
+    url(r'^auth/user/insert/$',IndexViews.myadmin_authuser_insert,name="myadmin_authuser_insert"),
+    
     # 权限组管理
     url(r'^auth/group/idnex/$',IndexViews.myadmin_authgroup_index,name="myadmin_authgroup_index"),
     url(r'^auth/group/add/$',IndexViews.myadmin_authgroup_add,name="myadmin_authgroup_add"),
     url(r'^auth/group/insert/$',IndexViews.myadmin_authgroup_insert,name="myadmin_authgroup_insert"),
-    url(r'^auth/group/del/$', IndexViews.myadmin_authgroup_del, name="myadmin_authgroup_del"),
-    url(r'^auth/group/edit/$', IndexViews.myadmin_authgroup_edit, name="myadmin_authgroup_edit"),
-
 
 
 ]

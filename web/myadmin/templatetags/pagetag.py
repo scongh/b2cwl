@@ -1,5 +1,7 @@
 from django import template
 register = template.Library()
+from myadmin import models
+from django.core.urlresolvers import reverse
 
 # 自定义过滤器
 # @register.filter
@@ -8,6 +10,31 @@ register = template.Library()
 
 #  自定义标签
 from django.utils.html import format_html
+
+# 自定义模板导航数据 标签
+@register.simple_tag
+def showNav():
+	# 获取一级分类
+	CatesList = models.Cates.objects.filter(pid=0)
+	s = ''
+	for i in CatesList:
+		# 由于在注释代码里不能识别{% %}，所以要导reverse的包来引用，(类似于format的用法)
+		s += '''
+			<li class="layout-header-nav-item">
+             <a href="{url}" class="layout-header-nav-link">{name}</a>
+            </li>
+		'''.format(name=i.name,url=reverse('myhome_list',args=(i.id,)))
+	return format_html(s)
+
+
+# 自定义乘法运算标签
+@register.simple_tag
+def cheng(var1,var2):
+	res = float(var1) * float(var2)
+
+	return '%.2f'%res
+
+
 @register.simple_tag
 # count总页数，p当前选中的页码，h表示一样有多少个页码
 def showPage(count,request,h):

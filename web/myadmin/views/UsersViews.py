@@ -5,23 +5,19 @@ from django.contrib.auth.hashers import make_password, check_password
 from .. models import Users
 import os
 
-from web.settings import BASE_DIR  # 地址
+from web.settings import BASE_DIR
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 from django.db.models import Q
-
-from django.contrib.auth.decorators import permission_required
 
 # Create your views here.
 # 用户模型的管理
 
 # 会员添加表单
-@permission_required('myadmin.create_Users',raise_exception=True) # 没有权限返回403界面
 def user_add(request):
     return render(request,'myadmin/users/add.html')
 
 # 会员执行添加
-# @permission_required('myadmin.create_Users',raise_exception=True)
 def user_insert(request):
     # 接收表单数据
     data = request.POST.dict()
@@ -49,8 +45,8 @@ def user_insert(request):
         pass
     return HttpResponse('<script>alert("添加失败");history.back(-1);</script>')
 
+
 # 会员列表
-@permission_required('myadmin.show_Users',raise_exception=True)
 def user_index(request):
     # return HttpResponse('user_index')
     # 获取所有用户数据
@@ -83,8 +79,10 @@ def user_index(request):
     # 分配数据
     # context = {'userlist': user_list,'pages': pages,'pages_max':pages[-1]}
     context = {'userlist': user_list}
+
     # 加载模板
     return render(request,'myadmin/users/index.html',context)
+
 
 # 头像上传的处理代码objects
 def uploads_pic(myfile):
@@ -99,8 +97,8 @@ def uploads_pic(myfile):
     except:
         return False
 
+
 # 会员编辑
-@permission_required('myadmin.edit_Users',raise_exception=True)
 def user_edit(request):
     # 接受会员用户id
     uid = request.GET.get('uid')
@@ -139,7 +137,6 @@ def user_edit(request):
         return render(request,'myadmin/users/edit.html/',context)
 
 # 会员状态修改
-@permission_required('myadmin.edit_Users',raise_exception=True)
 def user_set_status(request):
     # 通过uid获取 会员对象
     ob = Users.objects.get(id=request.GET.get('uid'))

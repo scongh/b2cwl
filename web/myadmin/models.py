@@ -82,7 +82,7 @@ class Cart(models.Model):
 # 订单模型
 class Order(models.Model):
     # 多对一 绑定会员id
-    uid = models.ForeignKey(to="Users", to_field="id")
+    orderid = models.ForeignKey(to="Users", to_field="id")
     username = models.CharField(max_length=20) #会员名
     phone = models.CharField(max_length=15)
     address = models.CharField(max_length=255) #地址
@@ -91,8 +91,6 @@ class Order(models.Model):
     status = models.IntegerField(default=0)
     addtime = models.DateTimeField(auto_now_add=True) # 添加时间
     paytime = models.DateTimeField(null=True) # 付款时间
-
-    paytype = models.IntegerField(default=0) # 支付类型
     # 自定义会员管理权限
     class Meta:
         permissions = (

@@ -2,8 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import re
 
-from django.core.urlresolvers import reverse
-
 class AdminLoginMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
@@ -32,20 +30,8 @@ class AdminLoginMiddleware:
             AdminUser = request.session.get('AdminUser',None)
             # 是否已经登录
             if not AdminUser:
-                # 没有登陆则提示
+               
                 return HttpResponse('<script>alert("请先登录");location.href="/myadmin/login/";</script>')
-
-        # # 前台登录的验证中间件
-        # homeurl = [
-        #     reverse()
-        # ]
-        # # 判断是否访问需要登录的路由
-        # if path in homeurl:
-        #     # 是否登录
-        #     if not request.session.get('VipUser',None):
-        #         # 没有登录则
-        #         return HttpResponse('<script>alert("请先登录");location.href="/login/";</script>')
-
 
         # 放行--该有的相应内容都响应
         response = self.get_response(request)
